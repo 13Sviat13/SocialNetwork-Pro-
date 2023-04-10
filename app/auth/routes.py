@@ -9,7 +9,7 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         flash(f"Submitted username={form.data['username']}, remember={form.data['remember']}", category="success")
-        return redirect(url_for("index"))
+        return redirect(url_for("main.index"))
     return render_template("auth/login.html", form=form)
 
 @bp.route("/register", methods=["GET", "POST"])
@@ -17,5 +17,5 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():
         flash(f"Registered Username={form.data['username']}, Email={form.data['email']}", category="success")
-        return redirect(url_for("index"))
+        return redirect(url_for("main.index"))
     return render_template("auth/register.html", form=form)
