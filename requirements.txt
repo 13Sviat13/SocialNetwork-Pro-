@@ -37,4 +37,11 @@ typing-extensions==4.5.0
 Flask-Migrate==4.0.4
 Mako==1.2.4
 alembic==1.10.3
+psycopg2-binary==2.9.6
+Faker==18.4.0
+Flake8==6.0.0
+mccabe==0.7.0
+pycodestyle==2.10.0
+pyflakes==3.0.1
+
 

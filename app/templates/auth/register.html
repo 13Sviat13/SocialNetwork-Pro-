@@ -21,10 +21,36 @@
                   <div class="alert alert-danger">{{ error }}</div>
                 {% endfor %}
               </div>
+               <div class="form-group">
+                {{ form.first_name.label(class="form-label") }}
+                {{ form.first_name(class="form-control") }}
+                {% for error in form.first_name.errors %}
+                  <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+              </div>
+               <div class="form-group">
+                {{ form.last_name.label(class="form-label") }}
+                {{ form.last_name(class="form-control") }}
+                {% for error in form.last_name.errors %}
+                  <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+              </div>
               <div class="form-group">
                 {{ form.email.label(class="form-label") }}
                 {{ form.email(class="form-control") }}
                 {% for error in form.email.errors %}
+                  <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+               <div class="form-group">
+                {{ form.Linkedln_profile.label(class="form-label") }}
+                {{ form.Linkedln_profile(class="form-control") }}
+                {% for error in form.Linkedln_profile.errors %}
+                  <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+               <div class="form-group">
+                {{ form.Facebook_profile.label(class="form-label") }}
+                {{ form.Facebook_profile(class="form-control") }}
+                {% for error in form.Facebook_profile.errors %}
                   <div class="alert alert-danger">{{ error }}</div>
                 {% endfor %}
               </div>
@@ -44,6 +70,7 @@
               </div>
               <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-block">Register</button>
+                <p class="bottom">Already have an account?  <a class="bottom" href="{{url_for('auth.login')}}"> Login here</a></p>
               </div>
             </form>
           </div>
