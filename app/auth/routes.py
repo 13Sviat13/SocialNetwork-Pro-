@@ -48,8 +48,9 @@ def register():
         db.session.commit()
         flash("Successfuly registered", category='success')
 
-        # flash(f"Registered Username={form.data['username']}, Email={form.data['email']}", category="success")
-        return redirect(url_for("main.view_profile"))
+        login_user(user)
+
+        return redirect(url_for("main.view_profile", user_id=current_user.id))
     return render_template("auth/register.html", form=form)
 
 
