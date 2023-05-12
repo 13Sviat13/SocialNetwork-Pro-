@@ -12,7 +12,6 @@ migrade = Migrate()
 login_manager = LoginManager()
 
 
-
 def create_app():
 
     app = Flask(__name__)
