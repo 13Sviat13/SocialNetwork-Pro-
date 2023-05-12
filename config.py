@@ -4,6 +4,7 @@ import psycopg2  # noqa
 
 
 load_dotenv()
+basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config:
@@ -22,3 +23,7 @@ class Config:
         POSTGRES_DATABASE
     )
     # SQLALCHEMY_TRACK_MODIFICATIONS = False
+    UPLOAD_FOLDER = os.path.join(basedir, 'uploads')
+    ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'gif'}
+    MAX_CONTENT_LENGTH = 16* 1024 * 1024
+

@@ -1,3 +1,5 @@
+import datetime
+
 from flask import Flask
 from config import Config
 from flask_login import current_user
@@ -10,6 +12,7 @@ migrade = Migrate()
 login_manager = LoginManager()
 
 
+
 def create_app():
 
     app = Flask(__name__)
@@ -18,6 +21,7 @@ def create_app():
     db.init_app(app)
     migrade.init_app(app, db)
     login_manager.init_app(app)
+    login_manager.login_view = "auth.login"
 
     from .main import bp as main_bp
     app.register_blueprint(main_bp)
@@ -25,8 +29,17 @@ def create_app():
     from .auth import bp as auth_bp
     app.register_blueprint(auth_bp)
 
-    from fake import bp as fake_bp
+    from app.fake import bp as fake_bp
     app.register_blueprint(fake_bp)
+
+    from .user import bp as user_bp
+    app.register_blueprint(user_bp)
+
+    from .post import bp as post_bp
+    app.register_blueprint(post_bp)
+
+    from .api import bp as api_bp
+    app.register_blueprint(api_bp)
 
     from . import models  # imported models
 
@@ -45,4 +58,10 @@ def create_app():
 
 app = create_app()
 
-from .main import routes  # noqa
+
+@app.before_request
+def before_request():
+    if current_user.is_authenticated:
+        if current_user.profile:
+            current_user.profile.last_seen = datetime.datetime.utcnow()
+            db.session.commit()
