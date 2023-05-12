@@ -3,8 +3,11 @@ from flask import render_template, redirect, url_for, flash
 from .forms import LoginForm, RegisterForm
 from flask_login import current_user, login_user, logout_user
 from .. import db
-from ..models import User, Profile
+from ..models import User
+from app.services import UserService
 
+
+user_service = UserService()
 
 @bp.route("/login", methods=["GET", "POST"])
 def login():
@@ -21,7 +24,7 @@ def login():
 
         login_user(user, remember=form.remember.data)
 
-        return redirect(url_for("main.view_profile", user_id=current_user.id))
+        return redirect(url_for("main.index"))
     return render_template("auth/login.html", form=form)
 
 
@@ -32,25 +35,10 @@ def register():
 
     form = RegisterForm()
     if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data)
-        user.set_password((form.password.data))
+        user_service.create(username=form.username.data, email=form.email.data, password=form.password.data)
+        flash("Successfully registered!", category="success")
 
-        db.session.add(user)
-        db.session.commit()
-        profile = Profile(
-                          user_id=user.id,
-                          first_name=form.first_name.data,
-                          last_name=form.last_name.data,
-                          Linkedln_URL=form.Linkedln_profile.data,
-                          Facebook_URL=form.Facebook_profile.data
-                         )
-        db.session.add(profile)
-        db.session.commit()
-        flash("Successfuly registered", category='success')
-
-        login_user(user)
-
-        return redirect(url_for("main.view_profile", user_id=current_user.id))
+        return redirect(url_for("auth.login"))
     return render_template("auth/register.html", form=form)
 
 
