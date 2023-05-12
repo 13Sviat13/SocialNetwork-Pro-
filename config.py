@@ -25,5 +25,4 @@ class Config:
     # SQLALCHEMY_TRACK_MODIFICATIONS = False
     UPLOAD_FOLDER = os.path.join(basedir, 'uploads')
     ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'gif'}
-    MAX_CONTENT_LENGTH = 16* 1024 * 1024
-
+    MAX_CONTENT_LENGTH = 16 * 1024 * 1024

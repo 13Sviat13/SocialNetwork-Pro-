@@ -17,5 +17,3 @@ def index():
 def about():
     # users = db.session.query(User).all()
     return render_template("about.html")
-
-

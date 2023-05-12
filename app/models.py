@@ -1,8 +1,8 @@
 from datetime import datetime
 from hashlib import md5
 
-from sqlalchemy.ext.hybrid import hybrid_property
-from sqlalchemy.orm import joinedload
+from sqlalchemy.ext.hybrid import hybrid_property # noqa
+from sqlalchemy.orm import joinedload # noqa
 
 from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -31,7 +31,7 @@ class User(BaseModel, UserMixin):
     dislikes = db.relationship(
         "Dislike", backref="user",  lazy="dynamic", primaryjoin='User.id==Dislike.user_id', cascade="all, delete"
     )
-    followers =  db.relationship(
+    followers = db.relationship(
         "Follow", backref="followee", foreign_keys="Follow.followee_id"
     )
     following = db.relationship(
@@ -42,10 +42,8 @@ class User(BaseModel, UserMixin):
         digest = md5(self.email.lower().encode('utf-8')).hexdigest()
         return f'https://www.gravatar.com/avatar{digest}?d=identicon&s={size}'
 
-
     def is_to_subscribed(self, user):
         return Follow.query.filter_by(follower_id=self.id, followee_id=user.id).first()
-
 
     def __repr__(self):
         return f"{self.username}({self.email})"
@@ -94,6 +92,7 @@ class Post(BaseModel):
     likes = db.relationship("Like", backref="post", uselist=True, cascade="all,delete")
     dislikes = db.relationship("Dislike", backref="post", uselist=True, cascade="all,delete")
 
+
 class Like(BaseModel):
     __tablename__ = "likes"
 
@@ -108,6 +107,7 @@ class Like(BaseModel):
         nullable=False
     )
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
 
 class Dislike(BaseModel):
     __tablename__ = "dislikes"
@@ -140,4 +140,3 @@ class Follow(db.Model):
 
     )
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-

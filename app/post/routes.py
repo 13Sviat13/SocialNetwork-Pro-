@@ -1,12 +1,9 @@
 from app import db
-from ..models import  Post, Like, Dislike
+from ..models import Post, Like, Dislike
 from app.post import bp
 from .forms import PostForm
 from flask import render_template, request, redirect, url_for, flash, abort
 from flask_login import current_user, login_required
-
-
-
 
 
 @bp.route('/create', methods=['GET', 'POST'])
@@ -30,6 +27,7 @@ def create():
         return redirect(url_for("user.blog"))
     return render_template('user/blog.html', title='Create Post', form=form)
 
+
 @bp.route('/<int:post_id>/edit', methods=['GET', 'POST'])
 @login_required
 def edit_post(post_id):
@@ -48,15 +46,12 @@ def edit_post(post_id):
     return render_template('user/blog.html', title='Edit Post', form=form, post=post)
 
 
-
-
 @bp.route('/<int:post_id>/like', methods=['GET', 'POST'])
 @login_required
 def like(post_id):
     post = Post.query.get_or_404(post_id)
     liked = Like.query.filter_by(user=current_user, post=post).first()
     disliked = Dislike.query.filter_by(user=current_user, post=post).first()
-
 
     if disliked:
         db.session.delete(disliked)
@@ -75,6 +70,7 @@ def like(post_id):
         db.session.commit()
         flash('You have liked this post!', 'success')
     return redirect(request.referrer)
+
 
 @bp.route('/<int:post_id>/dislike', methods=['GET', 'POST'])
 @login_required
@@ -100,6 +96,7 @@ def dislike(post_id):
         db.session.commit()
         flash('You have disliked this post!', 'success')
     return redirect(request.referrer)
+
 
 @bp.route('/<int:post_id>/delete', methods=['GET', 'POST'])
 @login_required

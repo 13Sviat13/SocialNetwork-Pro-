@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, SubmitField
 from wtforms.validators import Length
 
+
 class ProfileForm(FlaskForm):
     first_name = StringField("First Name")
     last_name = StringField("Last Name")
@@ -9,8 +10,3 @@ class ProfileForm(FlaskForm):
     facebook = StringField("Facebook Profile:")
     linkedin = StringField("LinkedIN Profile:")
     submit = SubmitField("Update")
-
-
-
-
-

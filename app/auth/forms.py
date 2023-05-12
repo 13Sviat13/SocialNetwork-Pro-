@@ -24,8 +24,6 @@ class RegisterForm(LoginForm):
 
     first_name = StringField("First name", validators=[validators.Optional()])
     last_name = StringField("Last name", validators=[validators.Optional()])
-    Linkedln_profile = StringField("Linkedln profile", validators=[validators.Optional()])
-    Facebook_profile = StringField("Facebook profile", validators=[validators.Optional()])
     email = StringField("Email", validators=[validators.DataRequired(message='Email is required'), validators.Email()])
     confirm_password = PasswordField("Confirm Password",
                                      validators=[

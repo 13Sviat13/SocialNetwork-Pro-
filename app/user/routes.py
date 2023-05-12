@@ -21,6 +21,7 @@ def blog():
             )
     return render_template("user/blog.html", posts=posts, form=form)
 
+
 @bp.route("profile/<string:username>", methods=['GET', 'POST'])
 @login_required
 def user(username):

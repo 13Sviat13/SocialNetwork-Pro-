@@ -2,12 +2,13 @@ from app.auth import bp
 from flask import render_template, redirect, url_for, flash
 from .forms import LoginForm, RegisterForm
 from flask_login import current_user, login_user, logout_user
-from .. import db
+from .. import db # noqa
 from ..models import User
 from app.services import UserService
 
 
 user_service = UserService()
+
 
 @bp.route("/login", methods=["GET", "POST"])
 def login():
@@ -35,7 +36,11 @@ def register():
 
     form = RegisterForm()
     if form.validate_on_submit():
-        user_service.create(username=form.username.data, email=form.email.data, password=form.password.data)
+        user_service.create(username=form.username.data,
+                            email=form.email.data,
+                            first_name=form.first_name.data,
+                            last_name=form.last_name.data,
+                            password=form.password.data)
         flash("Successfully registered!", category="success")
 
         return redirect(url_for("auth.login"))

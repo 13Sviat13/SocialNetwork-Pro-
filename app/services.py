@@ -7,7 +7,7 @@ class UserService:
 
     def get_by_id(self, user_id):
         user = db.session.query(User).filter(User.id == user_id).first_or_404
-        return  user
+        return user
 
     def get_by_username(self, username):
         user = db.session.query(User).filter(User.username == username).first_or_404
@@ -20,7 +20,7 @@ class UserService:
         db.session.add(user)
         db.session.commit()
 
-        profile = Profile(user_id=user.id)
+        profile = Profile(user_id=user.id, first_name=kwargs.get('first_name'), last_name=kwargs.get('last_name'))
         db.session.add(profile)
         db.session.commit()
 
@@ -47,6 +47,7 @@ class UserService:
         db.session.commit()
 
         return True
+
 
 class PostService:
     def get_by_id(self, post_id):
