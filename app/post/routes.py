@@ -17,7 +17,7 @@ def create():
 
             db.session.add(post)
             db.session.commit()
-            flash('Your post has been creates!', 'success')
+            flash('Your post has been created!', 'success')
         else:
             title = form.title.data
 
