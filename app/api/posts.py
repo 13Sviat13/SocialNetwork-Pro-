@@ -28,6 +28,7 @@ class PostResource(Resource):
         post = post_service.delete(post_id)
         return jsonify(PostSchema().dump(post, many=False))
 
+
 class PostsResource(Resource):
     def get(self):
         author_id = request.args.get('author_id', type=int)
@@ -41,6 +42,3 @@ class PostsResource(Resource):
         json_data = request.get_json()
         post = post_service.create(**json_data)
         return jsonify(PostSchema().dump(post, many=False))
-
-
-

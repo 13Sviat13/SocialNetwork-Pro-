@@ -9,6 +9,7 @@ from app.services import UserService, PostService
 user_service = UserService()
 post_service = PostService()
 
+
 class UsersResource(Resource):
     def get(self):
 
@@ -44,10 +45,11 @@ class UserResource(Resource):
         user = user_service.update(json_data)
         return jsonify(UserSchema().dump(user, many=False))
 
-    jwt_required()
+    @jwt_required()
     def delete(self, user_id):
         status = user_service.delete(user_id)
         return jsonify(status=status)
+
 
 class UsersPostResource(Resource):
     @jwt_required()
