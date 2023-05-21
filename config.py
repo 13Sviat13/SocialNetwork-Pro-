@@ -1,4 +1,6 @@
 import os
+import datetime
+
 from dotenv import load_dotenv
 import psycopg2  # noqa
 
@@ -26,3 +28,4 @@ class Config:
     UPLOAD_FOLDER = os.path.join(basedir, 'uploads')
     ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'gif'}
     MAX_CONTENT_LENGTH = 16 * 1024 * 1024
+    JWT_ACCESS_TOKEN_EXPIRES = datetime.timedelta(hours=1)

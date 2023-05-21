@@ -8,21 +8,6 @@ from app.services import PostService
 post_service = PostService()
 
 
-class PostsResource(Resource):
-    def get(self):
-        author_id = request.args.get('author_id', type=int)
-        if author_id:
-            posts = db.session.query(Post).filter(Post.author_id == author_id).all()
-        else:
-            posts = db.session.query(Post).all()
-        return jsonify(PostSchema().dump(posts, many=True))
-
-    def post(self):
-        json_data = request.get_json()
-        post = post_service.create(**json_data)
-        return jsonify(PostSchema().dump(post, many=False))
-
-
 class PostResource(Resource):
     def get(self, post_id):
         post = post_service.get_by_id(post_id)
@@ -41,4 +26,19 @@ class PostResource(Resource):
 
     def delete(self, post_id):
         post = post_service.delete(post_id)
+        return jsonify(PostSchema().dump(post, many=False))
+
+
+class PostsResource(Resource):
+    def get(self):
+        author_id = request.args.get('author_id', type=int)
+        if author_id:
+            posts = db.session.query(Post).filter(Post.author_id == author_id).all()
+        else:
+            posts = db.session.query(Post).all()
+        return jsonify(PostSchema().dump(posts, many=True))
+
+    def post(self):
+        json_data = request.get_json()
+        post = post_service.create(**json_data)
         return jsonify(PostSchema().dump(post, many=False))

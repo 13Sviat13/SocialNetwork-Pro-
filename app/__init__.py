@@ -1,6 +1,8 @@
 import datetime
 
 from flask import Flask
+from flask_jwt_extended import JWTManager
+
 from config import Config
 from flask_login import current_user
 from flask_sqlalchemy import SQLAlchemy
@@ -10,6 +12,7 @@ from flask_login import LoginManager
 db = SQLAlchemy()
 migrade = Migrate()
 login_manager = LoginManager()
+jwt = JWTManager()
 
 
 def create_app():
@@ -21,6 +24,7 @@ def create_app():
     migrade.init_app(app, db)
     login_manager.init_app(app)
     login_manager.login_view = "auth.login"
+    jwt.init_app(app)
 
     from .main import bp as main_bp
     app.register_blueprint(main_bp)
