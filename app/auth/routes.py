@@ -36,7 +36,8 @@ def register():
 
     form = RegisterForm()
     if form.validate_on_submit():
-        user = user_service.create(username=form.username.data,
+        user = user_service.create(
+                            username=form.username.data,
                             email=form.email.data,
                             first_name=form.first_name.data,
                             last_name=form.last_name.data,
