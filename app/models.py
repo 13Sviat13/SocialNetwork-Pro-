@@ -23,7 +23,7 @@ class User(BaseModel, UserMixin):
     created_at = db.Column(db.DateTime, default=datetime.utcnow())
 
     posts = db.relationship(
-        "Post", backref="author", uselist=True, lazy="dynamic", cascade="all, delete"
+        "Post", backref="author", uselist=True, lazy="joined", cascade="all, delete"
     )
     likes = db.relationship(
         "Like", backref="user",  lazy="dynamic", primaryjoin='User.id==Like.user_id', cascade="all, delete"
@@ -37,6 +37,10 @@ class User(BaseModel, UserMixin):
     following = db.relationship(
         "Follow", backref="follower", foreign_keys="Follow.follower_id"
     )
+
+    @property
+    def sample_property(self):
+        return True
 
     def avatar(self, size):
         digest = md5(self.email.lower().encode('utf-8')).hexdigest()
@@ -74,7 +78,11 @@ class Profile(db.Model):
     linkedin = db.Column(db.String)
     facebook = db.Column(db.String)
 
-    user = db.relationship("User", backref=db.backref("profile", uselist=False), uselist=False)
+    user = db.relationship("User", backref=db.backref("profile", uselist=False), uselist=False, lazy='joined')
+
+    @hybrid_property
+    def full_name(self):
+        return f"{self.first_name} {self.last_name}"
 
 
 class Post(BaseModel):
