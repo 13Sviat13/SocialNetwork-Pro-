@@ -23,7 +23,7 @@ def extract_users():
                 'username': user.username,
                 'email': user.email,
                 'full_name': full_name,
-                'post_count': user.posts.count()
+                'post_count': len(user.posts)
             }
         )
 
